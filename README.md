@@ -38,8 +38,7 @@
 ## 3.1. 데이터 수집 및 전처리
 
 ## 3.2. 백엔드
-![image (1).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/dcae9377-adb5-4833-9685-a7d158014b55/5c6dc678-e698-4f38-8b90-b6058c675ab7/image.png)
-![image (2).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/dcae9377-adb5-4833-9685-a7d158014b55/135cc626-7841-40e4-b8b2-760d8cb50f7e/image.png)
+![자바](./images/image (1).png)
 ## 3.3. 프론트엔드
 
 ## 3.4. 협업
