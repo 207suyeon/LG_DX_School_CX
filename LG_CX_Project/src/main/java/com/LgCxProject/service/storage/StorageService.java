@@ -1,5 +1,4 @@
 package com.LgCxProject.service.storage;
-
 import com.LgCxProject.domain.storage.Storage;
 import com.LgCxProject.domain.storage.UserStorageInfo;
 import com.LgCxProject.domain.supplements.Supplements;
@@ -26,12 +25,12 @@ public class StorageService {
     @Autowired
     StorageSupplementInfoObjectToDTO storageSupplementInfoObjectToDTO;
 
-    //전체 storage 조회
+    // 전체 storage 조회
     public List<Storage> findAllStorage() {
         return storageRepository.findAll();
     }
 
-    // 보관함 별 사용자 이름 리스트
+    //보관함 별 사용자 이름 리스트
     public HashMap<String, List<String>> containerUserName() {
         HashMap<String, List<String>> containerUserName = new HashMap<>();
         List<Storage> storages = storageRepository.findAll();
@@ -63,7 +62,7 @@ public class StorageService {
         return containerSupplementCount;
     }
 
-    // 보관함 별 영양제 용량 가져오기
+    //보관함 별 영양제 용량 가져오기
     public HashMap<String, Integer> containerSupplementCapacity() {
         List<Storage> storages = storageRepository.findAll();
         HashMap<String, Integer> containerSupplementCapacity = new HashMap<>();
@@ -76,7 +75,6 @@ public class StorageService {
         }
         return containerSupplementCapacity;
     }
-
 
     //보관함 별 영양제 정보 가져오기
     public HashMap<String, String> containerSupplementName(){
@@ -92,42 +90,33 @@ public class StorageService {
         return containerSupplementName;
     }
 
-    // 사용자 ID와 보관함 번호에 따라 색상을 결정하는 메서드
+    //사용자 ID와 보관함 번호에 따라 색상을 결정하는 메서드
     public HashMap<String ,String> containerColor(String userId) {
         HashMap<String ,String> containerColor = new HashMap<>();
         // 모든 보관함에 기본 색상 적용
         for(int i=1; i < 7; i++){
             String key = String.format("container%sColor",i);
-            containerColor.put(key,"#b09fbf");
+            containerColor.put(key,"#E6E6E6");
         }
         // 보관함 정보가 있는 보관함에 사용자가 쓰는 색상 적용
         List<Storage> storages = storageRepository.findAll();
         for(Storage storage: storages) {
             String storageNum = storage.getStorageId().replaceAll("[^1-9]", "");
             String key = String.format("container%sColor", storageNum);
-            containerColor.put(key, "#FFA01E");
+            containerColor.put(key, "#F0ECE4");
         }
         // 현재 userId가 사용하는 보관함에 user색상 적용
         List<UserStorageInfo> userStorageInfoList = userStorageRepository.findStorageByUserId(userId);
         for(UserStorageInfo userStorageInfo: userStorageInfoList) {
             String storageNum = userStorageInfo.getStorageId().replaceAll("[^1-9]", "");
             String key = String.format("container%sColor", storageNum);
-            containerColor.put(key, "#FF5050");
+            containerColor.put(key, "#ffffff");
         }
         return containerColor;
     }
 
-    String determineColorForUser(String userId, int containerNumber) {
-        switch (userId) {
-            case "user1":
-                return containerNumber % 2 == 0 ? "#ff0000" : "#00ff00"; // 빨강, 초록
-            case "user2":
-                return containerNumber % 2 == 0 ? "#0000ff" : "#ffff00"; // 파랑, 노랑
-            default:
-                return "#b09fbf"; // 기본 색상
-        }
-    }
-
-
+//    public void decrementSupplementCount(String containerId) {
+//        storageRepository.decrementSupplementCount(containerId);
+//    }
 
 }

@@ -3,233 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle}">영양제 등록 화면</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <script type="importmap">
-        {
-          "imports": {
-            "@material/web/": "https://esm.run/@material/web/"
-          }
-        }
-    </script>
-    <script type="module">
-        import '@material/web/all.js';
-        import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
-
-        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-    </script>
+    <title>영양제 등록</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
             background-color: #f5f5f5;
+            padding: 20px;
         }
-        h1, h2 {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
-        .time-picker {
-            background-color: #e8e0ff;
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .section-description {
+            margin-bottom: 20px;
+        }
+        .info-section {
+            background-color: white;
             padding: 20px;
-            border-radius: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .time-picker {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
         .time-display {
             font-size: 48px;
             text-align: center;
-            margin-bottom: 10px;
-        }
-        .am-pm {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-        .time-labels {
-            display: flex;
-            justify-content: space-between;
-        }
-        .time-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        md-filled-button, md-outlined-button {
-            --md-filled-button-container-color: #6750A4;
-            --md-filled-button-label-text-color: white;
-            --md-outlined-button-label-text-color: #6750A4;
-            --md-outlined-button-outline-color: #6750A4;
-        }
-        .supplement-info {
-            background-color: #A50034;
-            padding: 20px;
-            border-radius: 12px;
             margin-bottom: 20px;
-            width: 100%;
         }
-        .supplement-info div {
-            margin-bottom: 10px;
-        }
-
-        .myDB-supplement-info {
-            background-color: #A50034;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        .myDB-supplement-info div {
-            margin-bottom: 10px;
-        }
-
-        .up-down-buttons {
+        .am-pm-toggle {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
-        .up-down-buttons button {
-            margin: 0 10px;
-            font-size: 24px;
+        .am-pm-toggle .btn {
+            margin: 0 5px;
         }
-    </style>
+        .time-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .up-down-buttons button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .time-input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #hour-input, #minute-input {
+            width: 60px;
+            text-align: center;
+            font-size: 24px;
+            border: none;
+            border-bottom: 2px solid #9e9e9e;
+            background-color: transparent;
+        }
+
+        .time-separator {
+            font-size: 24px;
+            margin: 0 10px;
+        }
+
+        .time-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }    </style>
 </head>
 <body>
-<div style="display: flex; align-items: center; font-size: 36px;">
-    <strong>보관함</strong>
-    <h1 th:text="${storageNumber}" style="margin: 0 5px; font-size: inherit;"></h1>
-    <strong>번의 영양제 등록 화면</strong>
+<div class="container">
+    <div class="header">
+        <h4>영양제 등록</h4>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="section-title">영양제 정보 확인하기</div>
+            <div class="section-description">
+                등록한 영양제의 제품 정보와 섭취 정보를 확인해보세요.<br>
+                복용약과 함께 섭취할 때의 주의사항도 함께 확인할 수 있어요.
+            </div>
+            <div class="info-section">
+                <h6><strong>제품 정보</strong></h6>
+                <p><strong>영양제 이름:</strong> <span th:text="${supplement_Name}">영양제 이름</span></p>
+                <p><strong>영양제 성분:</strong> <span th:text="${main_ingredients}">성분 목록</span></p>
+            </div>
+
+            <div class="info-section">
+                <h6><strong>섭취 정보</strong></h6>
+                <p><strong>섭취량:</strong> <span th:text="${intake_amount}">섭취량</span></p>
+                <p><strong>섭취 횟수:</strong> <span th:text="${intake_frequency}">섭취 횟수</span></p>
+                <p><strong>섭취 방법:</strong> <span th:text="${intake_method}">섭취 방법</span></p>
+                <p><strong>주의사항:</strong> <span th:text="${medication_precautions}">주의사항</span></p>
+            </div>
+
+            <div class="info-section">
+                <h6><strong>마이데이터</strong></h6>
+                <p><strong>주의사항:</strong> <span th:text="${resultMessage}">병용섭취 주의사항</span></p>
+            </div>
+        </div>
+
+        <div class="col s12 m6">
+            <div class="section-title">영양제 섭취 알림 받기</div>
+            <div class="section-description">
+                키보드로 시간을 입력해보세요.<br>
+                입력한 시간에 영양제 섭취 알림을 받을 수 있어요.<br>
+            </div>
+
+            <div class="time-picker">
+                <h6><strong>시간 설정하기</strong></h6>
+                <form action="/saveIntakeTime" method="post" class="time-input-container">
+                    <input type="text" id="hour-input" name="hour" th:value="${hour}" placeholder="00" maxlength="2">
+                    <span class="time-separator">:</span>
+                    <input type="text" id="minute-input" name="minute" th:value="${minute}" placeholder="00" maxlength="2">
+                </form>
+                <div class="time-actions">
+                    <button id="time-reset-button" class="btn-floating btn-small waves-effect waves-light red">-</button>
+                    <button id="time-set-button" class="btn-floating btn-small waves-effect waves-light green">＋</button>
+                </div>
+            </div>
+            <div class="button-actions">
+                <button id="cancel-button" class="btn waves-effect waves-light grey">취소</button>
+                <button id="confirm-button" class="btn waves-effect waves-light">등록 완료</button>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- 영양제 정보 출력 -->
-<div class="supplement-info">
-    <div><strong>영양제 이름:</strong> <span th:text="${supplement_Name}">영양제 이름</span></div>
-    <div><strong>영양제 성분:</strong> <span th:text="${main_ingredients}">성분 목록</span></div>
-    <div><strong>섭취량:</strong> <span th:text="${intake_amount}">섭취량</span></div>
-    <div><strong>섭취 횟수:</strong> <span th:text="${intake_frequency}">섭취 횟수</span></div>
-    <div><strong>섭취 주의사항:</strong> <span th:text="${intake_method}">섭취 주의사항</span></div>
-</div>
-
-<!--복용약 데이터와 비교하여 관련 정보 알려주기-->
-<div class="myDB-supplement-info">
-    <div><strong>My 복용약 기반 주의사항:</strong> <span th:text="${medication_precautions}">이런 약을 먹고 있으니 조심하세여!</span></div>
-</div>
-
-
-<h2>섭취 시간 설정하기</h2>
-<!-- 타임 피커 -->
-<div class="time-picker">
-    <div class="time-labels">
-        <span>Hour</span>
-        <span>Minute</span>
-    </div>
-    <div class="time-display" id="time-display">00 : 00</div>
-    <div class="am-pm">
-        <md-filled-button id="am-button">AM</md-filled-button>
-        <md-outlined-button id="pm-button">PM</md-outlined-button>
-    </div>
-    <div class="up-down-buttons">
-        <button id="hour-up">▲</button>
-        <button id="minute-up">▲</button>
-    </div>
-    <div class="up-down-buttons">
-        <button id="hour-down">▼</button>
-        <button id="minute-down">▼</button>
-    </div>
-
-    <div class="time-actions">
-        <md-text-button id="reset-button">Cancel</md-text-button>
-        <form action="/storage/newstorage" method="get">
-            <md-filled-button type="submit">Ok</md-filled-button>
-        </form>
-    </div>
-</div>
-
 <script>
-    let isPM = true;
-    let hour = 0;
-    let minute = 0;
+    document.addEventListener('DOMContentLoaded', function() {
+        const hourInput = document.getElementById('hour-input');
+        const minuteInput = document.getElementById('minute-input');
 
-    const updateTimeDisplay = () => {
-        document.getElementById('time-display').innerText = `${hour.toString().padStart(2, '0')} : ${minute.toString().padStart(2, '0')}`;
-    };
-
-    const toggleButtonStyles = (selectedButton, unselectedButton) => {
-        // 'filled-button'인 상태와 'outlined-button'인 상태를 교체
-        const selectedButtonParent = selectedButton.parentNode;
-        const unselectedButtonParent = unselectedButton.parentNode;
-
-        // 새 버튼을 생성하고 기존 버튼을 교체
-        const filledButton = document.createElement('md-filled-button');
-        const outlinedButton = document.createElement('md-outlined-button');
-
-        filledButton.textContent = selectedButton.textContent;
-        outlinedButton.textContent = unselectedButton.textContent;
-
-        filledButton.id = selectedButton.id;
-        outlinedButton.id = unselectedButton.id;
-
-        // 기존 버튼을 대체
-        selectedButtonParent.replaceChild(filledButton, selectedButton);
-        unselectedButtonParent.replaceChild(outlinedButton, unselectedButton);
-
-        // 새로 생성된 버튼에 다시 이벤트 리스너 추가
-        addButtonListeners();
-    };
-
-    const addButtonListeners = () => {
-        document.getElementById('am-button').addEventListener('click', () => {
-            isPM = false;
-            toggleButtonStyles(document.getElementById('am-button'), document.getElementById('pm-button'));
+        document.getElementById('time-reset-button').addEventListener('click', function() {
+            hourInput.value = '';
+            minuteInput.value = '';
         });
-
-        document.getElementById('pm-button').addEventListener('click', () => {
-            isPM = true;
-            toggleButtonStyles(document.getElementById('pm-button'), document.getElementById('am-button'));
-        });
-    };
-
-    // 최초 실행 시 이벤트 리스너 추가
-    addButtonListeners();
-
-    document.getElementById('hour-up').addEventListener('click', () => {
-        hour = (hour + 1) % 24;
-        updateTimeDisplay();
     });
-
-    document.getElementById('hour-down').addEventListener('click', () => {
-        hour = (hour - 1 + 24) % 24;
-        updateTimeDisplay();
-    });
-
-    document.getElementById('minute-up').addEventListener('click', () => {
-        minute = (minute + 1) % 60;
-        updateTimeDisplay();
-    });
-
-    document.getElementById('minute-down').addEventListener('click', () => {
-        minute = (minute - 1 + 60) % 60;
-        updateTimeDisplay();
-    });
-
-    document.getElementById('reset-button').addEventListener('click', () => {
-        hour = 0;
-        minute = 0;
-        updateTimeDisplay();
-    });
-
-    // 섭취 시간 설정 시 값을 서버로 전송하기
-    document.querySelector('form').addEventListener('submit', (e) => {
-        const supplement_setting_time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}${isPM ? ' PM' : ' AM'}`;
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'supplement_setting_time';
-        input.value = supplement_setting_time;
-        e.target.appendChild(input);
-    });
-
-<!--    updateTimeDisplay();-->
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#time-set-button').on('click', function(e) {
+            e.preventDefault(); // 기본 동작(폼 제출)을 방지합니다.
 
+            const hour = $('#hour-input').val();
+            const minute = $('#minute-input').val();
+
+            // AJAX 요청을 통해 서버에 데이터를 보냅니다.
+            $.ajax({
+                url: '/saveIntakeTime',
+                type: 'POST',
+                data: {
+                    hour: hour,
+                    minute: minute
+                },
+                success: function(response) {
+                    alert('시간 설정이 완료되었습니다!');
+                },
+                error: function(xhr, status, error) {
+                    alert('시간 설정에 실패했습니다: ' + xhr.responseText);
+                }
+            });
+        });
+    });
+
+</script>
+<script>
+    $(document).ready(function() {
+        // 기존 Set 버튼 관련 코드 유지
+
+        // 취소 버튼 클릭 이벤트
+        $('#cancel-button').click(function() {
+            window.location.href = '/storage/storage';
+        });
+
+        // 확인 버튼 클릭 이벤트
+        $('#confirm-button').click(function() {
+            $.ajax({
+                url: '/saveUserStorage',
+                type: 'POST',
+                data: {
+                    // 필요한 데이터가 있다면 여기에 추가
+                },
+                success: function(response) {
+                    // 성공 시 처리
+                    alert('영양제 등록이 완료되었습니다.');
+                    window.location.href = '/storage/storage'; // 등록 후 이동할 페이지
+                },
+                error: function(xhr, status, error) {
+                    // 오류 시 처리
+                    alert('영양제 등록에 실패했습니다: ' + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
